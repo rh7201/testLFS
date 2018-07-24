@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Pickup")
 	bool GetIsActive();
 
+	UFUNCTION(BlueprintPure, Category = "Pickup")
+	bool GetAlwaysActive();
+
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
 		void SetIsActive(bool thePickUpState);
 
