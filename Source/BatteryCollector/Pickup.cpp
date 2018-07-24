@@ -30,3 +30,13 @@ void APickup::Tick(float DeltaTime)
 
 }
 
+bool APickup::GetIsActive()
+{
+	return isActive;
+}
+
+void APickup::SetIsActive(bool thePickupState)
+{
+	isActive = thePickupState;
+}
+
