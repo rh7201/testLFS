@@ -40,6 +40,11 @@ bool APickup::GetAlwaysActive()
 	return true;
 }
 
+bool APickup::GetAlwaysInActive()
+{
+	return false;
+}
+
 void APickup::SetIsActive(bool thePickupState)
 {
 	isActive = thePickupState;
