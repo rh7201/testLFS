@@ -44,7 +44,11 @@ public:
 	bool GetAlwaysInActive();
 
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
-		void SetIsActive(bool thePickUpState);
+	void SetIsActive(bool thePickUpState);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void GetCollected();	//NOTE: this will be called by character code, blueprint native event will automatically call _implementation, when the public method is called
+	virtual void GetCollected_Implementation();		//NOTE: this is actual implementation called, to be done in child class
 
 protected:
 	// Called when the game starts or when spawned

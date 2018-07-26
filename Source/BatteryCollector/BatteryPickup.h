@@ -15,6 +15,8 @@ class BATTERYCOLLECTOR_API ABatteryPickup : public APickup
 	
 public:
 	ABatteryPickup();
+
+	void GetCollected_Implementation() override;
 	
 	
 };

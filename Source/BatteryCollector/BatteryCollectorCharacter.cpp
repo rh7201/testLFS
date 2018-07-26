@@ -3,6 +3,7 @@
 #include "BatteryCollector.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "BatteryCollectorCharacter.h"
+#include "Pickup.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ABatteryCollectorCharacter
@@ -38,6 +39,12 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	//NOTE: Create collection sphere
+	collectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
+	collectionSphere->SetupAttachment(RootComponent);
+	collectionSphere->SetSphereRadius(200.0f);
+
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -51,6 +58,9 @@ void ABatteryCollectorCharacter::SetupPlayerInputComponent(class UInputComponent
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	//NOTE: set player input for collecting pickup, key/button related to "Collect" key word below will be bind on UE editor 
+	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &ABatteryCollectorCharacter::CollectPickups);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ABatteryCollectorCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ABatteryCollectorCharacter::MoveRight);
@@ -69,6 +79,24 @@ void ABatteryCollectorCharacter::SetupPlayerInputComponent(class UInputComponent
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ABatteryCollectorCharacter::OnResetVR);
+}
+
+void ABatteryCollectorCharacter::CollectPickups()
+{
+	TArray<AActor*> collectedActors;
+
+	collectionSphere->GetOverlappingActors(collectedActors);
+
+	for (int32 counter = 0; counter < collectedActors.Num(); ++counter)
+	{
+		APickup* const thePickUp = Cast<APickup>(collectedActors[counter]);
+
+		if (thePickUp && !thePickUp->IsPendingKill() && thePickUp->GetIsActive())
+		{
+			thePickUp->GetCollected();
+			thePickUp->SetIsActive(false);
+		}
+	}
 }
 
 
