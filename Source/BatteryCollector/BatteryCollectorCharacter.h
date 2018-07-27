@@ -22,6 +22,16 @@ class ABatteryCollectorCharacter : public ACharacter
 public:
 	ABatteryCollectorCharacter();
 
+	UFUNCTION(BlueprintPure, Category =  "Power")
+	float GetInitialPower();
+
+	UFUNCTION(BlueprintPure, Category = "Power")
+	float GetCurrentPower();
+
+	//NOTE: The power amount can be negative or positive
+	UFUNCTION(BlueprintCallable, Category = "Power")
+	void UpdatePower(float thePowerAmount);
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -68,6 +78,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Pickups")
 	void CollectPickups();
 
+	//NOTE: Editanywhere so that this property editable via code/editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power")
+	float initialPower;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -75,5 +89,10 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	//NOTE: Returns collection sphere subobject
 	FORCEINLINE class USphereComponent* GetCollectionSphere() const { return collectionSphere; }
+
+private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Power")
+	float currentPower;
 };
 

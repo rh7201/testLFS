@@ -4,6 +4,7 @@
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "BatteryCollectorCharacter.h"
 #include "Pickup.h"
+#include "BatteryPickup.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ABatteryCollectorCharacter
@@ -47,6 +48,24 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	initialPower = 2000.0f;
+	currentPower = initialPower;
+}
+
+float ABatteryCollectorCharacter::GetInitialPower()
+{
+	return initialPower;
+}
+
+float ABatteryCollectorCharacter::GetCurrentPower()
+{
+	return currentPower;
+}
+
+void ABatteryCollectorCharacter::UpdatePower(float thePowerAmount)
+{
+	currentPower += thePowerAmount;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -93,6 +112,10 @@ void ABatteryCollectorCharacter::CollectPickups()
 
 		if (thePickUp && !thePickUp->IsPendingKill() && thePickUp->GetIsActive())
 		{
+			ABatteryPickup* const batteryPickUp = Cast<ABatteryPickup>(thePickUp);
+
+			UpdatePower(batteryPickUp->GetPower());
+
 			thePickUp->GetCollected();
 			thePickUp->SetIsActive(false);
 		}

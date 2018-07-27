@@ -6,6 +6,9 @@
 ABatteryPickup::ABatteryPickup()
 {
 	GetMesh()->SetSimulatePhysics(true);
+
+	//NOTE: set default battery power
+	batteryPower = 150.0f;
 }
 
 void ABatteryPickup::GetCollected_Implementation()
@@ -13,6 +16,11 @@ void ABatteryPickup::GetCollected_Implementation()
 	Super::GetCollected_Implementation();
 
 	Destroy();
+}
+
+float ABatteryPickup::GetPower()
+{
+	return batteryPower;
 }
 
 

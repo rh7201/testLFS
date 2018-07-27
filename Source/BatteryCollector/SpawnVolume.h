@@ -24,14 +24,14 @@ public:
 	FVector GetRandomLocationInVolume();
 
 protected:
-	//NOTE: TSubClassOf allow us to use sub class of mentioned class here, in this case BatteryPickUp
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-	TSubclassOf<class APickup> spawnObject;
-
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void resetSpawnTiming();
+
+	//NOTE: TSubClassOf allow us to use sub class of mentioned class here, in this case BatteryPickUp
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<class APickup> spawnObject;
 
 	FTimerHandle spawnTimer;
 
@@ -42,10 +42,10 @@ protected:
 	float spawnDelayRangeHigh;
 	
 private:
+	void SpawnPickup();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* spawnPoint;
-
-	void SpawnPickup();
 
 	//NOTE:Actual spawn delay
 	float spawnDelay;

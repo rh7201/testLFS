@@ -17,6 +17,13 @@ public:
 	ABatteryPickup();
 
 	void GetCollected_Implementation() override;
+
+	float GetPower();
 	
+protected:
+
+	//NOTE: Enabled BlueprintProtected means this variable can only be accessed by blueprints that inherit this class' blueprint, but Editanywhere also make it accessible by this BP in editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
+	float batteryPower;
 	
 };
