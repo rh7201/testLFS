@@ -10,6 +10,15 @@ class ABatteryCollectorGameMode : public AGameModeBase
 
 public:
 	ABatteryCollectorGameMode();
+
+	virtual void Tick(float DeltaTime) override;
+	
+protected:
+
+	//NOTE: "Edit defaults only" only allows us to edit on constructor not on instance 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power")
+	//NOTE: this is the rate the main character loses power over the time
+	float decayRate;
 };
 
 
