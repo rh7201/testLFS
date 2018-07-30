@@ -51,6 +51,9 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 
 	initialPower = 2000.0f;
 	currentPower = initialPower;
+
+	speedFactor = 0.75f;
+	baseSpeed = 10.0f;
 }
 
 float ABatteryCollectorCharacter::GetInitialPower()
@@ -63,9 +66,14 @@ float ABatteryCollectorCharacter::GetCurrentPower()
 	return currentPower;
 }
 
-void ABatteryCollectorCharacter::UpdatePower(float thePowerAmount)
+void ABatteryCollectorCharacter::UpdatePowerAndStat(float thePowerAmount)
 {
 	currentPower += thePowerAmount;
+
+	//NOTE: Update movement speed based on power
+	GetCharacterMovement()->MaxWalkSpeed = baseSpeed + speedFactor * currentPower;
+
+	showPowerChangeEffect();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -114,7 +122,7 @@ void ABatteryCollectorCharacter::CollectPickups()
 		{
 			ABatteryPickup* const batteryPickUp = Cast<ABatteryPickup>(thePickUp);
 
-			UpdatePower(batteryPickUp->GetPower());
+			UpdatePowerAndStat(batteryPickUp->GetPower());
 
 			thePickUp->GetCollected();
 			thePickUp->SetIsActive(false);

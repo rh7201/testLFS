@@ -30,7 +30,7 @@ public:
 
 	//NOTE: The power amount can be negative or positive
 	UFUNCTION(BlueprintCallable, Category = "Power")
-	void UpdatePower(float thePowerAmount);
+	void UpdatePowerAndStat(float thePowerAmount);
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -78,9 +78,20 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Pickups")
 	void CollectPickups();
 
+	//NOTE: BlueprintImplementableEvent means we don't have to implement this method, blueprint will handle it
+	UFUNCTION(BlueprintImplementableEvent, Category = "Power")
+	void showPowerChangeEffect();
+
 	//NOTE: Editanywhere so that this property editable via code/editor
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
 	float initialPower;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
+	float speedFactor;
+
+	//NOTE: This is the speed when power is drop to 0
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", Meta = (BlueprintProtected = "true"))
+	float baseSpeed;
 
 public:
 	/** Returns CameraBoom subobject **/

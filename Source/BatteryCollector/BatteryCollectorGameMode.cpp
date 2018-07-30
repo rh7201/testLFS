@@ -31,7 +31,7 @@ void ABatteryCollectorGameMode::Tick(float DeltaTime)
 		if (thePlayer->GetCurrentPower() > 0)
 		{
 			float decayAmount = -1.0f * (thePlayer->GetInitialPower() * decayRate * DeltaTime);
-			thePlayer->UpdatePower(decayAmount);
+			thePlayer->UpdatePowerAndStat(decayAmount);
 		}
 	}
 }
