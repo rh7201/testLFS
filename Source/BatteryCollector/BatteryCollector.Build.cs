@@ -4,7 +4,9 @@ using UnrealBuildTool;
 
 public class BatteryCollector : ModuleRules
 {
-	public BatteryCollector(TargetInfo Target)
+	//NOTE: Edited due to conversion from 4.15 to 4.19
+	//public BatteryCollector(TargetInfo Target)
+	public BatteryCollector(ReadOnlyTargetRules Target) : base (Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
 	}
