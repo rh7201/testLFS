@@ -8,6 +8,8 @@ public class BatteryCollector : ModuleRules
 	//public BatteryCollector(TargetInfo Target)
 	public BatteryCollector(ReadOnlyTargetRules Target) : base (Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
+        //NOTE: UMG is for HUD creation
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 	}
 }
