@@ -6,12 +6,6 @@
 #include "Pickup.h"
 #include "BatteryPickup.h"
 
-//TEMP: Effort to prevent action after game is finished
-//#include "BatteryCollectorGameMode.h"
-
-//////////////////////////////////////////////////////////////////////////
-// ABatteryCollectorCharacter
-
 ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 {
 	// Set size for collision capsule
@@ -113,11 +107,6 @@ void ABatteryCollectorCharacter::SetupPlayerInputComponent(class UInputComponent
 
 void ABatteryCollectorCharacter::CollectPickups()
 {
-	////NOTE: To prevent character action after game is finished, requires enabling above .h include
-	//ABatteryCollectorGameMode* currentGameMode = Cast<ABatteryCollectorGameMode>(GetWorld()->GetAuthGameMode());
-	//if (currentGameMode->GetCurrentGameState() != EGameStates::EPlaying)
-	//	return;
-
 	TArray<AActor*> collectedActors;
 
 	collectionSphere->GetOverlappingActors(collectedActors);

@@ -49,8 +49,13 @@ protected:
 	class UUserWidget* currentWidget;
 
 private:
-	EGameStates currentGameState;
-};
+	void SetSpawnVolumesActivity(bool newState);
+	void ActivateBatterySpawner();
+	void DisablePlayerInput();
 
+	EGameStates currentGameState;
+
+	TArray<class ASpawnVolume*> spawnVolumeActors;
+};
 
 

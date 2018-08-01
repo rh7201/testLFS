@@ -23,11 +23,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Spawning")
 	FVector GetRandomLocationInVolume();
 
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
+	void SetSpawningState(bool newSpawningState);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void resetSpawnTiming();
+	void SetSpawnTiming();
 
 	//NOTE: TSubClassOf allow us to use sub class of mentioned class here, in this case BatteryPickUp
 	UPROPERTY(EditAnywhere, Category = "Spawning")
@@ -49,5 +52,7 @@ private:
 
 	//NOTE:Actual spawn delay
 	float spawnDelay;
+
+	bool isSpawnActive;
 	
 };
