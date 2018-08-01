@@ -3,6 +3,15 @@
 #include "GameFramework/GameModeBase.h"
 #include "BatteryCollectorGameMode.generated.h"
 
+UENUM(BlueprintType)
+enum class EGameStates : uint8
+{
+	EPlaying,
+	EGameOver,
+	EWon,
+	EUnknown
+};
+
 UCLASS(minimalapi)
 class ABatteryCollectorGameMode : public AGameModeBase
 {
@@ -17,6 +26,11 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Power")
 	float GetPowerAmountToWin() const;
+
+	UFUNCTION(BlueprintPure, Category = "Game State")
+	EGameStates GetCurrentGameState() const;
+
+	void SetCurrentGameState(EGameStates newGameState);
 	
 protected:
 
@@ -33,6 +47,9 @@ protected:
 
 	UPROPERTY()
 	class UUserWidget* currentWidget;
+
+private:
+	EGameStates currentGameState;
 };
 
 

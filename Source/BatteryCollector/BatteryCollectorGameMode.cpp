@@ -29,10 +29,17 @@ void ABatteryCollectorGameMode::Tick(float DeltaTime)
 
 	if (thePlayer)
 	{
-		if (thePlayer->GetCurrentPower() > 0)
+		if (GetCurrentGameState() == EGameStates::EPlaying)
 		{
-			float decayAmount = -1.0f * (thePlayer->GetInitialPower() * decayRate * DeltaTime);
-			thePlayer->UpdatePowerAndStat(decayAmount);
+			if (thePlayer->GetCurrentPower() >= GetPowerAmountToWin())
+				SetCurrentGameState(EGameStates::EWon);
+			else if (thePlayer->GetCurrentPower() > 0)
+			{
+				float decayAmount = -1.0f * (thePlayer->GetInitialPower() * decayRate * DeltaTime);
+				thePlayer->UpdatePowerAndStat(decayAmount);
+			}
+			else
+				SetCurrentGameState(EGameStates::EGameOver);
 		}
 	}
 }
@@ -40,6 +47,7 @@ void ABatteryCollectorGameMode::Tick(float DeltaTime)
 void ABatteryCollectorGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	SetCurrentGameState(EGameStates::EPlaying);
 
 	ABatteryCollectorCharacter* thePlayer = Cast<ABatteryCollectorCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
 
@@ -61,4 +69,14 @@ void ABatteryCollectorGameMode::BeginPlay()
 float ABatteryCollectorGameMode::GetPowerAmountToWin() const
 {
 	return powerAmountToWin;
+}
+
+EGameStates ABatteryCollectorGameMode::GetCurrentGameState() const
+{
+	return currentGameState;
+}
+
+void ABatteryCollectorGameMode::SetCurrentGameState(EGameStates newGameState)
+{
+	currentGameState = newGameState;
 }
