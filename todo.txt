@@ -2,4 +2,4 @@ add more objects here and there, and nowhere
 
 - addition for develop
 - another test
-- master advancing
+- master and develop advancing together (merged after resolving conflict)
