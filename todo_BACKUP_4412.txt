@@ -1,9 +1,0 @@
-add more objects here and there, and nowhere
-
-- addition for develop
-- another test
-<<<<<<< HEAD
-- master advancing
-=======
-- develop advancing and another advancing and advancing
->>>>>>> develop
